@@ -1,0 +1,18 @@
+<div id="assistants-container">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Package</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let assistant of assistants$ | async; index as i">
+        <td>{{ i + 1 }}</td>
+        <td>{{ assistant.firstName }} {{ assistant.lastName }}</td>
+        <td>{{ assistant.package | packageParser }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

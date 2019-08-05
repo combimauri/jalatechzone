@@ -1,0 +1,23 @@
+<header>
+  <nav>
+    <div class="nav-wrapper">
+      <div class="container">
+        <a routerLink="/">TechZone</a>
+        <ng-container *ngIf="true">
+          <a data-target="mobile-menu" class="sidenav-trigger">
+            <i class="fa fa-bars"></i>
+          </a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a routerLink="/assistants">Assistants</a></li>
+          </ul>
+        </ng-container>
+      </div>
+    </div>
+  </nav>
+
+  <ng-container *ngIf="true">
+    <ul wcSidenav id="mobile-menu" class="sidenav">
+      <li><a routerLink="/assistants" class="sidenav-close">Assistants</a></li>
+    </ul>
+  </ng-container>
+</header>
