@@ -7,4 +7,7 @@ export interface Assistant {
   email: string;
   package: Package;
   deleteFlag: boolean;
+  phone?: string;
+  insertDate?: Date;
+  updateDate?: Date;
 }

@@ -4,10 +4,11 @@ import { RouterModule } from '@angular/router';
 
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
+import { SidenavModule } from '../shared/directives/sidenav/sidenav.module';
 
 @NgModule({
   declarations: [NavbarComponent, FooterComponent],
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, SidenavModule],
   exports: [NavbarComponent, FooterComponent]
 })
 export class LayoutModule {}

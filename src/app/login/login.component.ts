@@ -11,7 +11,5 @@ export class LoginComponent {
   email: string;
   password: string;
 
-  constructor(public auth: AuthService) {
-    console.log('hola');
-  }
+  constructor(public auth: AuthService) {}
 }

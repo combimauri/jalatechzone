@@ -1,6 +1,7 @@
 export enum Package {
-  teens = 1,
-  gold = 2,
-  platinum = 3,
-  jalaFamily = 4
+  invalid = '',
+  teens = 'teens',
+  gold = 'gold',
+  platinum = 'platinum',
+  jalaFamily = 'jalaFamily'
 }

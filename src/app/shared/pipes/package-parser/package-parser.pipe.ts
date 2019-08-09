@@ -17,7 +17,7 @@ export class PackageParserPipe implements PipeTransform {
       case Package.jalaFamily:
         return 'Jala Family';
       default:
-        return 'Ivalid Package';
+        return 'Invalid Package';
     }
   }
 }

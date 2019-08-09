@@ -1,14 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'tz-footer',
   templateUrl: './footer.component.html',
   styleUrls: ['./footer.component.scss']
 })
-export class FooterComponent implements OnInit {
-  currentYear: number;
-
-  ngOnInit(): void {
-    this.currentYear = new Date().getFullYear();
-  }
+export class FooterComponent {
+  currentYear = new Date().getFullYear();
+  footerLink = 'http://tech-zone.org';
 }
