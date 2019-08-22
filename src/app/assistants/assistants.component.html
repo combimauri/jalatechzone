@@ -16,6 +16,9 @@
       <td class="hide-on-small-only">{{ assistant.email }}</td>
       <td>{{ assistant.package | packageParser }}</td>
       <td>
+        <a class="modal-trigger" href="#print-credential" (click)="selectedAssistant = assistant">
+          <i class="fas fa-qrcode fa-lg"></i>
+        </a>
         <a class="modal-trigger" href="#upsert-assistant" (click)="patchAssistantsForm(assistant)">
           <i class="fas fa-edit fa-lg"></i>
         </a>
@@ -30,9 +33,26 @@
   <i class="fas fa-plus"></i>
 </a>
 
+<div tzModal id="print-credential" class="modal">
+  <ng-container *ngIf="selectedAssistant">
+    <div class="modal-content">
+      <h4>Print Credential</h4>
+      <div class="center-align">
+        <tz-credential #credential [assistant]="selectedAssistant" (credentialLoaded)="currentCredential = credential"
+          canvasWidth="354" canvasHeight="532">
+        </tz-credential>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-close waves-effect waves-light btn ok-btn" (click)="printCredential()">Print</button>
+      <button class="modal-close waves-effect waves-light btn cancel-btn">Cancel</button>
+    </div>
+  </ng-container>
+</div>
+
 <div tzModal id="upsert-assistant" class="modal" (modalClose)="patchAssistantsForm(emptyAssistant)">
   <div class="modal-content">
-    <h4>Add Assistant</h4>
+    <h4>Assistant</h4>
     <form [formGroup]="assistantsForm">
       <div class="row">
         <div class="input-field col s12">

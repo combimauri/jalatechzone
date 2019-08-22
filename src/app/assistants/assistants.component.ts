@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 
 import { AssistantsService } from './assistants.service';
 import { Assistant } from '../shared/models/assistant.model';
+import { CredentialComponent } from '../shared/components/credential/credential.component';
 import { Package } from '../shared/models/package.enum';
 import { MaterializeService } from '../shared/services/materialize/materialize.service';
 import { SelectDirective } from '../shared/directives/select/select.directive';
@@ -27,6 +28,7 @@ export class AssistantsComponent implements OnInit {
   assistants$: Observable<Assistant[]>;
   selectedAssistant: Assistant;
   assistantsForm: FormGroup;
+  currentCredential: CredentialComponent;
   @ViewChild('packageSelect', { static: true })
   private packageSelect: SelectDirective;
 
@@ -51,5 +53,11 @@ export class AssistantsComponent implements OnInit {
     this.assistantsForm.patchValue({ ...assistant });
     this.materialService.updateTextFields();
     this.packageSelect.initFormSelect();
+  }
+
+  printCredential(): void {
+    if (this.currentCredential) {
+      this.currentCredential.print();
+    }
   }
 }
