@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AssistantsRoutingModule } from './assistants-routing.module';
 import { AssistantsComponent } from './assistants.component';
-import { AssistantsService } from './assistants.service';
+import { AssistantService } from '../shared/services/assistant/assistant.service';
 import { CredentialModule } from '../shared/components/credential/credential.module';
 import { PackageModule } from '../shared/pipes/package-parser/package-parser.module';
 import { ModalModule } from '../shared/directives/modal/modal.module';
@@ -24,6 +24,6 @@ import { MaterializeService } from '../shared/services/materialize/materialize.s
     ModalModule,
     SelectModule
   ],
-  providers: [AssistantsService, MaterializeService]
+  providers: [AssistantService, MaterializeService]
 })
 export class AssistantsModule {}

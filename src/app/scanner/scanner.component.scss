@@ -1,0 +1,7 @@
+:host zxing-scanner::ng-deep video {
+  max-height: 65vh;
+  max-width: 500px;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}

@@ -5,15 +5,16 @@ import {
 } from '@angular/fire/firestore';
 
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
-import { Assistant } from '../shared/models/assistant.model';
+import { Assistant } from '../../models/assistant.model';
 
 const collectionName = 'assistants';
 const deleteFlagField = 'deleteFlag';
 const firstNameField = 'firstName';
 
 @Injectable()
-export class AssistantsService {
+export class AssistantService {
   private assistantsCollection: AngularFirestoreCollection<Assistant>;
 
   constructor(private db: AngularFirestore) {
@@ -22,6 +23,21 @@ export class AssistantsService {
       ref =>
         ref.where(deleteFlagField, '==', false).orderBy(firstNameField, 'asc')
     );
+  }
+
+  getById(id: string): Observable<Assistant> {
+    return this.db
+      .doc<Assistant>(`${this.assistantsCollection}/${id}`)
+      .valueChanges()
+      .pipe(
+        map(assistant => {
+          if (assistant && !assistant.deleteFlag) {
+            return assistant;
+          }
+
+          return null;
+        })
+      );
   }
 
   getAssistants(): Observable<Assistant[]> {
