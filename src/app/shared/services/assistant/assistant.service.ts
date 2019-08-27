@@ -27,7 +27,7 @@ export class AssistantService {
 
   getById(id: string): Observable<Assistant> {
     return this.db
-      .doc<Assistant>(`${this.assistantsCollection}/${id}`)
+      .doc<Assistant>(`${collectionName}/${id}`)
       .valueChanges()
       .pipe(
         map(assistant => {
@@ -51,6 +51,8 @@ export class AssistantService {
       id = this.db.createId();
       assistant.id = id;
       assistant.insertDate = new Date();
+
+      this.initializeCheckValues(assistant);
     } else {
       assistant.updateDate = new Date();
     }
@@ -66,5 +68,9 @@ export class AssistantService {
     }
 
     return Promise.resolve();
+  }
+
+  private initializeCheckValues(assistant: Assistant): void {
+    assistant.checkIn = false;
   }
 }

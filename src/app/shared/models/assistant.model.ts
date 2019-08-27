@@ -10,4 +10,5 @@ export interface Assistant {
   phone?: string;
   insertDate?: Date;
   updateDate?: Date;
+  checkIn?: boolean;
 }

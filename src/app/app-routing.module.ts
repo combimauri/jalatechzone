@@ -22,6 +22,14 @@ const routes: Routes = [
         mod => mod.AssistantsModule
       ),
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'scanner',
+    loadChildren: () =>
+      import('./scanner/scanner.module').then(
+        mod => mod.ScannerModule
+      ),
+    canActivate: [AuthGuard]
   }
 ];
 
