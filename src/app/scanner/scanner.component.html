@@ -1,0 +1,39 @@
+<h3>Scanner</h3>
+<div class="input-field">
+  <select tzSelect [(ngModel)]="selectedItemForScan">
+    <option value="" disabled selected>Choose an option</option>
+    <option value="checkIn">Check In</option>
+    <option value="snackOne">Snack #1</option>
+    <option value="lunch">Lunch</option>
+    <option value="snackTwo">Snack #2</option>
+  </select>
+  <label></label>
+</div>
+<div class="center-align">
+  <zxing-scanner (scanSuccess)="processCode($event)"></zxing-scanner>
+</div>
+
+<div #assistantProcessedModal=modalDirective tzModal (modalClose)="cleanData()" class="modal">
+  <div class="modal-content">
+    <div [ngClass]="{ 'red-text': modalImage === images.error, 'green-text': modalImage === images.info }"
+      class="center-align">
+      <h4>{{ modalMessage }}</h4>
+      <img [src]="modalImage" [alt]="modalMessage">
+      <ng-container *ngIf="assistant; else modalError">
+        <p>Name: {{ abbreviatedName }}</p>
+        <p>Package: {{ assistant.package }}</p>
+      </ng-container>
+      <ng-template #modalError>
+        <p><b>The scanner reads: </b> {{ assistantId }}</p>
+      </ng-template>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button *ngIf="modalImage === images.info" class="modal-close waves-effect waves-light btn">
+      Ok
+    </button>
+    <button *ngIf="modalImage === images.error" class="modal-close waves-effect waves-light btn">
+      Try again
+    </button>
+  </div>
+</div>

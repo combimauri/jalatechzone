@@ -47,9 +47,7 @@ export class CredentialComponent implements OnInit, OnChanges {
 
   print(): void {
     const printButton = document.createElement('a');
-    printButton.download = `${this.assistant.firstName} ${
-      this.assistant.lastName
-    }`;
+    printButton.download = `${this.assistant.firstName} ${this.assistant.lastName}`;
     printButton.href = this.credentialCanvas.nativeElement.toDataURL(
       'image/png;base64'
     );
@@ -65,7 +63,7 @@ export class CredentialComponent implements OnInit, OnChanges {
       const templateImage = new Image();
       const qrTop = 170;
       const qrLeft = 80;
-      const nameTop = 155;
+      const nameTop = 160;
       const nameLeft = this.canvasWidth / 2;
 
       templateImage.src = 'assets/images/cred-ver.png';
@@ -77,7 +75,7 @@ export class CredentialComponent implements OnInit, OnChanges {
         }
 
         context.drawImage(templateImage, 0, 0);
-        context.font = '40px Montserrat';
+        context.font = '40px Antonio';
         context.textAlign = 'center';
         context.fillText(
           `${this.assistantFirstName} ${this.assistantLastName}`,

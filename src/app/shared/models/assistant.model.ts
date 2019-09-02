@@ -10,4 +10,8 @@ export interface Assistant {
   phone?: string;
   insertDate?: Date;
   updateDate?: Date;
+  checkIn?: boolean;
+  snackOne?: boolean;
+  snackTwo?: boolean;
+  lunch?: boolean;
 }

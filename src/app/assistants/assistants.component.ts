@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { Observable } from 'rxjs';
 
-import { AssistantsService } from './assistants.service';
+import { AssistantService } from '../shared/services/assistant/assistant.service';
 import { Assistant } from '../shared/models/assistant.model';
 import { CredentialComponent } from '../shared/components/credential/credential.component';
 import { Package } from '../shared/models/package.enum';
@@ -33,7 +33,7 @@ export class AssistantsComponent implements OnInit {
   private packageSelect: SelectDirective;
 
   constructor(
-    public assistantsService: AssistantsService,
+    public assistantsService: AssistantService,
     private materialService: MaterializeService,
     private formBuilder: FormBuilder
   ) {}

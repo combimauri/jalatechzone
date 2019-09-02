@@ -1,10 +1,14 @@
 @import './styles.colors';
 @import '~materialize-css/sass/materialize';
 @import '~@fortawesome/fontawesome-free/css/all.css';
-@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+@font-face {
+  font-family: 'Antonio';
+  src: url('assets/fonts/Antonio-Regular.ttf');
+}
 
 body {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Antonio', sans-serif;
 }
 
 tz-root {
