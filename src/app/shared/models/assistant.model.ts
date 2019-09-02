@@ -11,4 +11,7 @@ export interface Assistant {
   insertDate?: Date;
   updateDate?: Date;
   checkIn?: boolean;
+  snackOne?: boolean;
+  snackTwo?: boolean;
+  lunch?: boolean;
 }

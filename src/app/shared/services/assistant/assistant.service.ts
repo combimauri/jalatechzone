@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import {
   AngularFirestoreCollection,
   AngularFirestore
@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Assistant } from '../../models/assistant.model';
+import { Package } from '../../models/package.enum';
 
 const collectionName = 'assistants';
 const deleteFlagField = 'deleteFlag';
@@ -68,6 +69,43 @@ export class AssistantService {
     }
 
     return Promise.resolve();
+  }
+
+  validateFieldForScan(
+    itemForScan: string,
+    assistant: Assistant,
+    messageEmitter: EventEmitter<string>
+  ): boolean {
+    if (itemForScan === 'checkIn') {
+      return true;
+    }
+
+    if (itemForScan === 'snackOne' || itemForScan === 'snackTwo') {
+      const valid = !!assistant.checkIn;
+
+      if (!valid) {
+        messageEmitter.emit('Looks like the assistant did not make check in');
+      }
+
+      return valid;
+    }
+
+    if (itemForScan === 'lunch') {
+      const validCheckIn = !!assistant.checkIn;
+      const validPackage = assistant.package !== Package.teens;
+
+      if (!validCheckIn) {
+        messageEmitter.emit('Looks like the assistant did not make check in');
+      }
+
+      if (!validPackage) {
+        messageEmitter.emit('Assistant cannot access this benefit');
+      }
+
+      return validCheckIn && validPackage;
+    }
+
+    return false;
   }
 
   private initializeCheckValues(assistant: Assistant): void {

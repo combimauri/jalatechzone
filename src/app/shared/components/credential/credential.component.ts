@@ -47,9 +47,7 @@ export class CredentialComponent implements OnInit, OnChanges {
 
   print(): void {
     const printButton = document.createElement('a');
-    printButton.download = `${this.assistant.firstName} ${
-      this.assistant.lastName
-    }`;
+    printButton.download = `${this.assistant.firstName} ${this.assistant.lastName}`;
     printButton.href = this.credentialCanvas.nativeElement.toDataURL(
       'image/png;base64'
     );

@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  OnDestroy,
+  EventEmitter
+} from '@angular/core';
 
 import { Subscription, Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
@@ -18,6 +24,7 @@ export class ScannerComponent implements OnInit, OnDestroy {
     error: 'assets/images/error.png'
   };
   modalImage = this.images.error;
+  validationMessageEmitter: EventEmitter<string> = new EventEmitter();
   modalMessage: string;
   selectedItemForScan: string;
   assistantId: string;
@@ -26,9 +33,26 @@ export class ScannerComponent implements OnInit, OnDestroy {
   @ViewChild('assistantProcessedModal', { static: true })
   assistantModal: ModalDirective;
 
+  get assistantFirstName() {
+    return this.assistant.firstName.split(' ')[0];
+  }
+
+  get assistantLastName() {
+    return this.assistant.lastName.split(' ')[0];
+  }
+
+  get abbreviatedName() {
+    return `${this.assistantFirstName} ${this.assistantLastName}`;
+  }
+
   constructor(private assistantService: AssistantService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.validationMessageEmitter.subscribe((errorMessage: string) => {
+      this.modalMessage = errorMessage;
+      this.modalImage = this.images.error;
+    });
+  }
 
   ngOnDestroy(): void {
     if (this.assistantSubscription) {
@@ -43,13 +67,18 @@ export class ScannerComponent implements OnInit, OnDestroy {
         .getById(assistantId)
         .pipe(first())
         .subscribe(assistant => {
-          console.log(assistant);
           if (assistant) {
             this.assistant = assistant;
-            this.processScanSelection();
+
+            if (!this.selectedItemForScan) {
+              this.validationMessageEmitter.emit('Please select an option');
+            } else {
+              this.processScanSelection();
+            }
           } else {
-            this.modalMessage = 'This does not look like a valid credential';
-            this.modalImage = this.images.error;
+            this.validationMessageEmitter.emit(
+              'This does not look like a valid credential'
+            );
           }
 
           setTimeout(() => {
@@ -71,15 +100,22 @@ export class ScannerComponent implements OnInit, OnDestroy {
     ];
 
     if (!assistantFieldValueForSelection) {
-      this.assistant[this.selectedItemForScan] = true;
+      const isValid = this.assistantService.validateFieldForScan(
+        this.selectedItemForScan,
+        this.assistant,
+        this.validationMessageEmitter
+      );
 
-      this.assistantService.upsertAssistant(this.assistant);
+      if (isValid) {
+        this.assistant[this.selectedItemForScan] = true;
 
-      this.modalMessage = `${this.selectedItemForScan} checked successfully`;
-      this.modalImage = this.images.info;
+        this.assistantService.upsertAssistant(this.assistant);
+
+        this.modalMessage = `${this.selectedItemForScan} checked successfully`;
+        this.modalImage = this.images.info;
+      }
     } else {
-      this.modalMessage = 'Assistant was already checked';
-      this.modalImage = this.images.error;
+      this.validationMessageEmitter.emit('Assistant was already checked');
     }
   }
 }
