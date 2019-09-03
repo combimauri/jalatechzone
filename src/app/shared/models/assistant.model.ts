@@ -13,4 +13,5 @@ export interface Assistant {
   snackOne?: boolean;
   snackTwo?: boolean;
   lunch?: boolean;
+  visibleInSearch?: boolean;
 }

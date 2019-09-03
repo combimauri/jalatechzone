@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import { AssistantService } from '../shared/services/assistant/assistant.service';
 import { Assistant } from '../shared/models/assistant.model';
@@ -15,7 +15,7 @@ import { SelectDirective } from '../shared/directives/select/select.directive';
   templateUrl: './assistants.component.html',
   styleUrls: ['./assistants.component.scss']
 })
-export class AssistantsComponent implements OnInit {
+export class AssistantsComponent implements OnInit, OnDestroy {
   readonly emptyAssistant: Assistant = {
     id: '',
     fullName: '',
@@ -24,7 +24,9 @@ export class AssistantsComponent implements OnInit {
     package: Package.invalid,
     deleteFlag: false
   };
-  assistants$: Observable<Assistant[]>;
+  searchTerm = '';
+  assistants: Assistant[];
+  assistantsSubscription: Subscription;
   selectedAssistant: Assistant;
   assistantsForm: FormGroup;
   currentCredential: CredentialComponent;
@@ -32,18 +34,43 @@ export class AssistantsComponent implements OnInit {
   private packageSelect: SelectDirective;
 
   constructor(
-    public assistantsService: AssistantService,
+    public assistantService: AssistantService,
     private materialService: MaterializeService,
     private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
-    this.assistants$ = this.assistantsService.getAssistants();
     this.assistantsForm = this.formBuilder.group({ ...this.emptyAssistant });
+    this.assistantsSubscription = this.assistantService
+      .getAssistants()
+      .subscribe(assistants => {
+        this.assistants = assistants;
+        this.searchAssistant();
+      });
+  }
+
+  ngOnDestroy(): void {
+    if (this.assistantsSubscription) {
+      this.assistantsSubscription.unsubscribe();
+    }
+  }
+
+  searchAssistant(): void {
+    if (this.searchTerm) {
+      this.assistants.forEach(assistant => {
+        assistant.visibleInSearch = assistant.fullName
+          .toLowerCase()
+          .includes(this.searchTerm.toLowerCase());
+      });
+    } else {
+      this.assistants.forEach(assistant => {
+        assistant.visibleInSearch = true;
+      });
+    }
   }
 
   upsertAssistant(): void {
-    this.assistantsService
+    this.assistantService
       .upsertAssistant(this.assistantsForm.value)
       .then(() => this.patchAssistantsForm(this.emptyAssistant));
   }
