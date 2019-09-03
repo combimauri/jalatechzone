@@ -17,7 +17,7 @@
     <tr *ngFor="let assistant of assistants; index as i">
       <ng-container *ngIf="assistant.visibleInSearch">
         <td>{{ i + 1 }}</td>
-        <td>{{ assistant.firstName + ' ' + assistant.lastName }}</td>
+        <td>{{ assistant.fullName }}</td>
         <td>
           <p>
             <label>

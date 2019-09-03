@@ -13,7 +13,6 @@ import { AssistantService } from '../shared/services/assistant/assistant.service
 export class RegistrationComponent implements OnInit, OnDestroy {
   searchTerm = '';
   rfidInputEnabled = false;
-  currentAssistant: Assistant;
   assistants: Assistant[];
   assistantsSubscription: Subscription;
 
@@ -25,19 +24,19 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       .subscribe(assistants => {
         this.assistants = assistants;
         this.searchAssistant();
-        this.currentAssistant = this.assistants[0];
       });
   }
 
   ngOnDestroy(): void {
-    this.assistantsSubscription.unsubscribe();
+    if (this.assistantsSubscription) {
+      this.assistantsSubscription.unsubscribe();
+    }
   }
 
   searchAssistant(): void {
     if (this.searchTerm) {
       this.assistants.forEach(assistant => {
-        const fullName = `${assistant.firstName} ${assistant.lastName}`;
-        assistant.visibleInSearch = fullName
+        assistant.visibleInSearch = assistant.fullName
           .toLowerCase()
           .includes(this.searchTerm.toLowerCase());
       });
