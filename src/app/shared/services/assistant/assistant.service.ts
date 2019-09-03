@@ -74,7 +74,7 @@ export class AssistantService {
   validateFieldForScan(
     itemForScan: string,
     assistant: Assistant,
-    messageEmitter: EventEmitter<string>
+    messageEmitter: EventEmitter<string> = new EventEmitter()
   ): boolean {
     if (itemForScan === 'checkIn') {
       return true;
