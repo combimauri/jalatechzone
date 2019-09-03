@@ -18,8 +18,7 @@ import { SelectDirective } from '../shared/directives/select/select.directive';
 export class AssistantsComponent implements OnInit {
   readonly emptyAssistant: Assistant = {
     id: '',
-    firstName: '',
-    lastName: '',
+    fullName: '',
     email: '',
     phone: '',
     package: Package.invalid,

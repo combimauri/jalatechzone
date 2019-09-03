@@ -12,7 +12,7 @@ import { Package } from '../../models/package.enum';
 
 const collectionName = 'assistants';
 const deleteFlagField = 'deleteFlag';
-const firstNameField = 'firstName';
+const fullNameField = 'fullName';
 
 @Injectable()
 export class AssistantService {
@@ -22,7 +22,7 @@ export class AssistantService {
     this.assistantsCollection = this.db.collection<Assistant>(
       collectionName,
       ref =>
-        ref.where(deleteFlagField, '==', false).orderBy(firstNameField, 'asc')
+        ref.where(deleteFlagField, '==', false).orderBy(fullNameField, 'asc')
     );
   }
 

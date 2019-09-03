@@ -20,7 +20,7 @@
       <h4>{{ modalMessage }}</h4>
       <img [src]="modalImage" [alt]="modalMessage">
       <ng-container *ngIf="assistant; else modalError">
-        <p>Name: {{ abbreviatedName }}</p>
+        <p>Name: {{ assistant.fullName }}</p>
         <p>Package: {{ assistant.package }}</p>
       </ng-container>
       <ng-template #modalError>

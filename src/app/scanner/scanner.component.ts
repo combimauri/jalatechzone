@@ -33,18 +33,6 @@ export class ScannerComponent implements OnInit, OnDestroy {
   @ViewChild('assistantProcessedModal', { static: true })
   assistantModal: ModalDirective;
 
-  get assistantFirstName() {
-    return this.assistant.firstName.split(' ')[0];
-  }
-
-  get assistantLastName() {
-    return this.assistant.lastName.split(' ')[0];
-  }
-
-  get abbreviatedName() {
-    return `${this.assistantFirstName} ${this.assistantLastName}`;
-  }
-
   constructor(private assistantService: AssistantService) {}
 
   ngOnInit(): void {

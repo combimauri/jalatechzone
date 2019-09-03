@@ -29,14 +29,6 @@ export class CredentialComponent implements OnInit, OnChanges {
   @ViewChild('qrCode', { static: true })
   private qrCode: QRCodeComponent;
 
-  get assistantFirstName() {
-    return this.assistant.firstName.split(' ')[0];
-  }
-
-  get assistantLastName() {
-    return this.assistant.lastName.split(' ')[0];
-  }
-
   ngOnInit(): void {
     this.credentialLoaded.emit();
   }
@@ -47,7 +39,7 @@ export class CredentialComponent implements OnInit, OnChanges {
 
   print(): void {
     const printButton = document.createElement('a');
-    printButton.download = `${this.assistant.firstName} ${this.assistant.lastName}`;
+    printButton.download = this.assistant.fullName;
     printButton.href = this.credentialCanvas.nativeElement.toDataURL(
       'image/png;base64'
     );
@@ -61,9 +53,9 @@ export class CredentialComponent implements OnInit, OnChanges {
       const context = (this.credentialCanvas
         .nativeElement as HTMLCanvasElement).getContext('2d');
       const templateImage = new Image();
-      const qrTop = 170;
-      const qrLeft = 80;
-      const nameTop = 160;
+      const qrTop = 185;
+      const qrLeft = 87;
+      const nameTop = 157;
       const nameLeft = this.canvasWidth / 2;
 
       templateImage.src = 'assets/images/cred-ver.png';
@@ -75,13 +67,9 @@ export class CredentialComponent implements OnInit, OnChanges {
         }
 
         context.drawImage(templateImage, 0, 0);
-        context.font = '40px Antonio';
+        context.font = '25px Antonio';
         context.textAlign = 'center';
-        context.fillText(
-          `${this.assistantFirstName} ${this.assistantLastName}`,
-          nameLeft,
-          nameTop
-        );
+        context.fillText(this.assistant.fullName, nameLeft, nameTop);
         context.drawImage(qrImage, qrLeft, qrTop);
       };
     }
