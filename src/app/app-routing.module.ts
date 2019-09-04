@@ -32,6 +32,14 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'credentials',
+    loadChildren: () =>
+      import('./credentials/credentials.module').then(
+        mod => mod.CredentialsModule
+      ),
+    canActivate: [AuthGuard]
+  },
+  {
     path: 'scanner',
     loadChildren: () =>
       import('./scanner/scanner.module').then(mod => mod.ScannerModule),
